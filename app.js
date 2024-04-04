@@ -86,13 +86,24 @@ function dataPlan (planLimit, curDay, curUsage) {
     const curAverUsage = curUsage / curDay;
     const projectedUsage = curAverUsage * 30;
     const exceededUsage = projectedUsage - planLimit;
-    const newIdealUsage = dataRemaining / daysLeft
+    const newIdealUsage = dataRemaining / daysLeft;
+    const underUsage = projectedUsage - planLimit;
 
-    console.log(`${curDay} days used, ${daysLeft} days remaining\n Average daily use: ${idealUsage} GB/day\n`);
-    console.log(`You are EXCEEDING your daily average by (${curAverUsage} GB/day), continuing this high usage, you'll exceed your plan by ${exceededUsage} GB. \nTo stay below your data plan, use no more than ${newIdealUsage} GB/day.`);
+    if (exceededUsage > 0) {
+        console.log(`${curDay} days used, ${daysLeft} days remaining\n Average daily use: ${idealUsage} GB/day\n`);
+        console.log(`You are EXCEEDING your daily average by (${curAverUsage} GB/day), continuing this high usage, you'll exceed your plan by ${exceededUsage} GB. \nTo stay below your data plan, use no more than ${newIdealUsage} GB/day.`);
+    }
+    else if (curAverUsage < idealUsage) {
+        console.log(`You are UNDER your average daily use (${curAverUsage} GB/day), continuing this reserved usage level, you'll still have ${underUsage} GB.\n To take advantage of every last GB you have, start using ${newIdealUsage} GB/day.`);
+    }
+    else {
+        console.log("You are perfect.")
+    }
+ 
 
 }
 dataPlan(100, 15, 56);
+
 
 //function data(planLimit, day, usage) {
     //console.log(`${day} days used, ${30 - day} days remaining.`);
